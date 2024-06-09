@@ -11,7 +11,7 @@ export async function getCabins() {
   return data;
 }
 
-export async function createEditCabin(newCabin, id) {
+export async function createUpdateCabin(newCabin, id) {
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
   // if this string contains any slashes('/'), then supabase will create folders based on that.
@@ -64,6 +64,23 @@ export async function createEditCabin(newCabin, id) {
     throw new Error(
       "Cabins could not be uploaded and the cabin was not created"
     );
+  }
+
+  return data;
+}
+
+export async function updateCabinPrice(curCabin, id, newPrice) {
+  let query = supabase
+    .from("cabins")
+    .update({ ...curCabin, regularPrice: newPrice })
+    .eq("id", id)
+    .select();
+
+  const { data, error } = await query.select().single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Price of Cabin could not be updated");
   }
 
   return data;

@@ -10,6 +10,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import PriceWithEdit from "./PriceWithEdit";
 
 const Img = styled.img`
   display: block;
@@ -25,11 +26,6 @@ const Cabin = styled.div`
   font-weight: 600;
   color: var(--color-grey-600);
   font-family: "Sono";
-`;
-
-const Price = styled.div`
-  font-family: "Sono";
-  font-weight: 600;
 `;
 
 const Discount = styled.div`
@@ -67,7 +63,7 @@ function CabinRow({ cabin }) {
       <Img src={image} />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
-      <Price>{formatCurrency(regularPrice)}</Price>
+      <PriceWithEdit regularPrice={regularPrice} id={cabinId} cabin={cabin} />
       {Discount ? (
         <Discount>{formatCurrency(discount)}</Discount>
       ) : (

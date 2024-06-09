@@ -9,12 +9,12 @@ import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 
 import { useCreateCabin } from "./useCreateCabin";
-import { useEditCabin } from "./useEditCabin";
+import { useUpdateCabin } from "./useUpdateCabin";
 
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { isCreating, createCabinMutation } = useCreateCabin();
-  const { isEditing, editCabinMutation } = useEditCabin();
-  const isWorking = isCreating || isEditing;
+  const { isUpdating, updateCabinMutation } = useUpdateCabin();
+  const isWorking = isCreating || isUpdating;
 
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
@@ -30,7 +30,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditSession)
-      editCabinMutation({ newCabinData: { ...data, image }, id: editId });
+      updateCabinMutation({ newCabinData: { ...data, image }, id: editId });
     else
       createCabinMutation(
         { ...data, image },

@@ -104,6 +104,31 @@ export async function getStaysTodayActivity() {
   return data;
 }
 
+export async function createUpdateBooking(newBooking, id) {
+  // 1.Create/Edit booking
+  let query = supabase.from("bookings");
+
+  // A) CREATE
+  if (!id) query = query.insert([newBooking]);
+
+  // B) EDIT
+  if (id)
+    query = query
+      // notice here : we are not placing that in an array
+      .update(newBooking)
+      .eq("id", id)
+      .select();
+
+  const { data, error } = await query.select().single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be created");
+  }
+
+  return data;
+}
+
 export async function updateBooking(id, obj) {
   const { data, error } = await supabase
     .from("bookings")

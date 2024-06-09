@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { cloneElement } from "react";
 import styled from "styled-components";
 
 const StyledFormRow = styled.div`
@@ -21,12 +20,6 @@ const StyledFormRow = styled.div`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
   }
-
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
 `;
 
 const Label = styled.label`
@@ -38,21 +31,20 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRow({ label, error, children }) {
+function DateFormRow({ label, error, children }) {
   return (
     <StyledFormRow>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
-
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>
   );
 }
 
-FormRow.propTypes = {
+DateFormRow.propTypes = {
   label: PropTypes.any,
   error: PropTypes.any,
   children: PropTypes.any,
 };
 
-export default FormRow;
+export default DateFormRow;

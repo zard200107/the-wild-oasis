@@ -15,9 +15,14 @@ const StyledSelect = styled.select`
   box-shadow: var(--shadow-sm);
 `;
 
-function Select({ options, value, onChange, ...props }) {
+function Select({ options, value, onChange, register, name, ...props }) {
   return (
-    <StyledSelect value={value} onChange={onChange} {...props}>
+    <StyledSelect
+      value={value}
+      {...(typeof register === "function" ? register(name) : {})}
+      onChange={onChange}
+      {...props}
+    >
       {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}
@@ -28,9 +33,11 @@ function Select({ options, value, onChange, ...props }) {
 }
 
 Select.propTypes = {
-  value: PropTypes.string,
-  options: PropTypes.array,
-  onChange: PropTypes.func,
+  value: PropTypes.any,
+  options: PropTypes.any,
+  onChange: PropTypes.any,
+  register: PropTypes.func,
+  name: PropTypes.any,
 };
 
 export default Select;
